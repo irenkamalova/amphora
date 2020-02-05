@@ -1,12 +1,9 @@
 package com.kamalova.amphora;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 public class FamilyTree {
-    private final FamilyNode root;
+    private final List<FamilyNode> root = new ArrayList<>();
     private Map<Double, FamilyNode> map = new HashMap<>();
     int relation; // <- TODO Enum
     // 0 -> kid, 1 -> father, 2 -> mother
@@ -16,56 +13,68 @@ public class FamilyTree {
         map.put(root.getId(), root);
     }
 
-    // id
-    public FamilyNode add(String name, int age, double idOfRelationNode, int relation) {
+    public FamilyNode add(String name, int age, String nodeName, int relation) {
         // find parent of node?
-        FamilyNode to = map.get(idOfRelationNode);
-
+        //FamilyNode to = map.get(nodeName);
+        findByName(nodeName);
+        FamilyNode node;
         switch (relation) {
-            case 0 : {
+            case 0: {
                 // getId getFirst
                 double id;
                 if (to.hasKids()) {
-                 id = to.getFirstKid().getId() + 1;
+                    id = to.getFirstKid().getId() + 1;
                 } else {
                     id = to.getId() * 0.1;
                 }
-                FamilyNode node = new FamilyNode(id, name, age);
+                node = new FamilyNode(id, name, age);
+                if (to.isMale()) {
+                    node.addFather(to);
+                } else {
+                    node.addMother(to);
+                }
                 to.addKid(node);
                 break;
             }
             case 1: {
                 double id = to.getId() - to.getId() / 2;
-                FamilyNode node = new FamilyNode(id, name, age);
+                node = new FamilyNode(id, name, age);
                 to.addFather(node);
+                node.addKid(to);
                 break;
             }
             case 2: {
                 double id = to.getId() + to.getId() / 2;
-                FamilyNode node = new FamilyNode(id, name, age);
+                node = new FamilyNode(id, name, age);
                 to.addMother(node);
+                node.addKid(to);
                 break;
             }
-            default: throw new IllegalArgumentException("Non correct relation");
+            default:
+                throw new IllegalArgumentException("Non correct relation");
         }
-        return root;
+        map.put(node.getId(), node);
+        return node;
     }
 
     public void printTree() {
         // BFS to print the tree
         Queue<FamilyNode> queue = new LinkedList<>();
+        Set<FamilyNode> printed = new HashSet<>();
         queue.add(root);
         while (!queue.isEmpty()) {
             FamilyNode node = queue.poll();
             FamilyNode father = node.getFather();
+            if (father != null && !printed.contains(father)) {
+                queue.add(father);
+            }
             FamilyNode mother = node.getMother();
-            queue.add(father);
-            queue.add(mother);
+            if (mother != null && !printed.contains(mother)) {
+                queue.add(mother);
+            }
             System.out.println(node);
-
+            printed.add(node);
         }
-        System.out.println(root.toString());
-
     }
 
 }
