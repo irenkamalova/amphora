@@ -15,19 +15,7 @@ class SortFamilyTreeTest {
     @Test
     @DisplayName("When sort three then data is correct")
     void testCorrectSorting() {
-        FamilyTree t = new FamilyTree();
-        t.add("Anna", 1900, null, null); // 3
-        t.add("Bob", 1910, null, null); // 4
-        t.add("Loly", 1889, null, null); // 1
-        t.add("Erich", 1890, null, null); // 2
-
-        t.add("Elise", 1920, "Anna", "Bob"); // 8
-        t.add("Tom", 1917, null, "Anna"); // 7
-        t.add("Linda", 1916, "Bob", null); // 6
-        t.add("Paul", 1911, "Loly", "Erich"); // 5
-
-        t.add("Samanta", 1940, "Elise", "Paul"); // 9
-        t.add("David", 1960, null, "Samanta"); // 10
+        FamilyTree t = TestUtils.createFamilyTree();
 
         // Q3 - sort tree in ascending order:
         List<FamilyNode> sortedAscendingOrder = SortFamilyTree.sort(t, Integer::compareTo);
@@ -50,8 +38,5 @@ class SortFamilyTreeTest {
         Collections.reverse(sortedAscendingOrder);
         assertIterableEquals(sortedAscendingOrder, sortedDescendingOrder);
         assertEquals(1960, sortedDescendingOrder.get(0).getAge());
-
-
     }
-
 }

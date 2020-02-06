@@ -1,16 +1,17 @@
 package com.kamalova.amphora;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@EqualsAndHashCode
 public class FamilyNode {
     private String name;
     // year of birth
     private int age;
-    //private final Parents parents = new Parents();
     private final FamilyNode[] parents = new FamilyNode[2];
     private final List<FamilyNode> kids = new ArrayList<>();
     private int generation;
