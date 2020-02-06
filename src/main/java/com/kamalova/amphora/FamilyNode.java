@@ -29,11 +29,11 @@ public class FamilyNode {
     @Override
     public String toString() {
         return "FamilyNode{" +
-                "g=" + generation +
+                "gen=" + generation +
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", parents=" + printParents() +
-                ", kids=" + printKids() +
+                printKids() +
                 '}';
     }
 
@@ -41,11 +41,12 @@ public class FamilyNode {
         StringBuilder sb = new StringBuilder();
         for (FamilyNode parent : parents) {
             if (parent != null) {
-                sb.append("Parent: ")
-                        .append(parent.name)
+                sb.append(parent.name)
                         .append(", ")
                         .append(parent.age)
                         .append(";");
+            } else {
+                sb.append(" --;");
             }
         }
         return sb.toString();
@@ -53,11 +54,14 @@ public class FamilyNode {
 
     private String printKids() {
         StringBuilder sb = new StringBuilder();
-        kids.forEach(kid ->
-                sb.append(kid.name)
-                        .append(" ")
-                        .append(kid.age)
-                        .append(";"));
+        if (kids.size() > 0) {
+            sb.append(" kids=");
+            kids.forEach(kid ->
+                    sb.append(kid.name)
+                            .append(" ")
+                            .append(kid.age)
+                            .append(";"));
+        }
         return sb.toString();
     }
 
