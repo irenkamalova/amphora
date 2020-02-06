@@ -3,80 +3,91 @@ package com.kamalova.amphora;
 import java.util.*;
 
 public class FamilyTree {
-    private final List<FamilyNode> root = new ArrayList<>();
-    private Map<Double, FamilyNode> map = new HashMap<>();
-    int relation; // <- TODO Enum
-    // 0 -> kid, 1 -> father, 2 -> mother
+    private final List<FamilyNode> roots = new ArrayList<>();
 
-    public FamilyTree(FamilyNode root) {
-        this.root = root;
-        map.put(root.getId(), root);
+    public FamilyTree() {
     }
 
-    public FamilyNode add(String name, int age, String nodeName, int relation) {
-        // find parent of node?
-        //FamilyNode to = map.get(nodeName);
-        findByName(nodeName);
+    public FamilyNode add(String name, int age,
+                          String father, String mother) {
         FamilyNode node;
-        switch (relation) {
-            case 0: {
-                // getId getFirst
-                double id;
-                if (to.hasKids()) {
-                    id = to.getFirstKid().getId() + 1;
-                } else {
-                    id = to.getId() * 0.1;
-                }
-                node = new FamilyNode(id, name, age);
-                if (to.isMale()) {
-                    node.addFather(to);
-                } else {
-                    node.addMother(to);
-                }
-                to.addKid(node);
-                break;
+        if (father == null && mother == null) {
+            node = new FamilyNode(0, name, age);
+            roots.add(node);
+            return node;
+        } else if (father != null && mother != null) {
+            FamilyNode fn = findByName(father);
+            FamilyNode mn = findByName(mother);
+            if (fn.getGeneration() != mn.getGeneration()) {
+                throw new IllegalArgumentException("Incorrect parents");
             }
-            case 1: {
-                double id = to.getId() - to.getId() / 2;
-                node = new FamilyNode(id, name, age);
-                to.addFather(node);
-                node.addKid(to);
-                break;
-            }
-            case 2: {
-                double id = to.getId() + to.getId() / 2;
-                node = new FamilyNode(id, name, age);
-                to.addMother(node);
-                node.addKid(to);
-                break;
-            }
-            default:
-                throw new IllegalArgumentException("Non correct relation");
+            node = new FamilyNode(fn.getGeneration() + 1, name, age);
+            fn.addKid(node);
+            mn.addKid(node);
+            FamilyNode[] parents = node.getParents();
+            parents[0] = fn;
+            parents[1] = mn;
+            return node;
+        } else if (mother != null) {
+            return addToParent(name, age, mother);
+        } else {
+            return addToParent(name, age, father);
         }
-        map.put(node.getId(), node);
+    }
+
+    private FamilyNode addToParent(String name, int age, String parent) {
+        if (parent == null) {
+            throw new IllegalArgumentException("Error with " + name);
+        }
+        FamilyNode parentNode = findByName(parent);
+        FamilyNode node = new FamilyNode(parentNode.getGeneration() + 1, name, age);
+        FamilyNode[] parents = node.getParents();
+        parents[0] = parentNode;
+        parentNode.addKid(node);
         return node;
+    }
+
+    public FamilyNode findByName(String name) {
+        // BFS to search node - O(N) complexity
+        Set<FamilyNode> seen = new HashSet<>();
+        Queue<FamilyNode> queue = new LinkedList<>(roots);
+
+        while (!queue.isEmpty()) {
+            FamilyNode node = queue.poll();
+            if (node.getName().equals(name)) {
+                return node;
+            }
+            List<FamilyNode> kids = node.getKids();
+            kids.forEach(kid -> {
+                if (!seen.contains(kid)) {
+                    queue.add(kid);
+                    seen.add(kid);
+                }
+            });
+            seen.add(node);
+        }
+        throw new IllegalArgumentException("Parent " + name + " not founded");
     }
 
     public void printTree() {
         // BFS to print the tree
-        Queue<FamilyNode> queue = new LinkedList<>();
-        Set<FamilyNode> printed = new HashSet<>();
-        queue.add(root);
+        Set<FamilyNode> seen = new HashSet<>();
+        Queue<FamilyNode> queue = new LinkedList<>(roots);
+
         while (!queue.isEmpty()) {
             FamilyNode node = queue.poll();
-            FamilyNode father = node.getFather();
-            if (father != null && !printed.contains(father)) {
-                queue.add(father);
-            }
-            FamilyNode mother = node.getMother();
-            if (mother != null && !printed.contains(mother)) {
-                queue.add(mother);
-            }
+
+            List<FamilyNode> kids = node.getKids();
+            kids.forEach(kid -> {
+                if (!seen.contains(kid)) {
+                    queue.add(kid);
+                    seen.add(kid);
+                }
+            });
+            seen.add(node);
             System.out.println(node);
-            printed.add(node);
         }
     }
-
 }
 
 

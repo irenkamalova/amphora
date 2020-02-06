@@ -1,0 +1,8 @@
+1. Names are unique (to simplify)
+If we don't want our names to be unique,
+we can just add id, that will be for example hash of {name + age}
+
+2. To simplify interface (as there is no constructions in conditions) - we can add only kids
+
+2. If there is no parent - it's the most ancient parent
+

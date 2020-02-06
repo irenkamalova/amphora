@@ -4,15 +4,20 @@ public class Test {
 
     public static void main(String[] args) {
         FamilyNode r = new FamilyNode(100, "Anna", 1990);
-        FamilyTree t = new FamilyTree(r);
 
-        FamilyNode father = t.add("Father", 1970, 100, 1);
-        t.add("Mother", 1970, 100, 2);
-        t.add("Kid0", 2001, 100, 0);
-        t.add("Kid1", 2002, 100, 0);
+        FamilyTree t = new FamilyTree();
+        t.add("Anna", 1900, null, null);
+        t.add("Bob", 1900, null, null);
 
-        t.add("GrandFatherF", 1950, father.getId(), 1);
-        t.add("GrandFatherM", 1950, father.getId(), 2);
+        t.add("Loly", 1890, null, null);
+        t.add("Erich", 1890, null, null);
+
+        t.add("Elise", 1920, "Anna", "Bob");
+        t.add("Tom", 1917, null, "Anna");
+        t.add("Linda", 1917, "Bob", null);
+        t.add("Paul", 1910, "Loly", "Erich");
+
+        t.add("Samanta", 1940, "Elise", "Paul");
 
         t.printTree();
 

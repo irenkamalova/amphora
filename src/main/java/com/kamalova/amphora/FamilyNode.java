@@ -7,32 +7,18 @@ import java.util.List;
 
 @Getter
 public class FamilyNode {
-    private final double id;
-
     private String name;
     // year of birth
     private int age;
-    private final Parents parents = new Parents();
+    //private final Parents parents = new Parents();
+    private final FamilyNode[] parents = new FamilyNode[2];
     private final List<FamilyNode> kids = new ArrayList<>();
+    private int generation;
 
-    public FamilyNode(double id) {
-        this.id = id;
-    }
-
-    public FamilyNode(double id, String name, int age) {
-        this.id = id;
+    public FamilyNode(int generation, String name, int age) {
+        this.generation = generation;
         this.name = name;
         this.age = age;
-    }
-
-    public FamilyNode addFather(FamilyNode father) {
-        parents.setFather(father);
-        return this;
-    }
-
-    public FamilyNode addMother(FamilyNode mother) {
-        parents.setMother(mother);
-        return this;
     }
 
     public FamilyNode addKid(FamilyNode familyNode) {
@@ -40,27 +26,29 @@ public class FamilyNode {
         return this;
     }
 
-    public FamilyNode getFather() {
-        return parents.getFather();
-    }
-
-    public FamilyNode getMother() {
-        return parents.getMother();
-    }
-
-    public FamilyNode getFirstKid() {
-        return kids.iterator().next();
-    }
-
     @Override
     public String toString() {
         return "FamilyNode{" +
-                "id=" + id +
+                "g=" + generation +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                ", parents=" + parents +
+                ", parents=" + printParents() +
                 ", kids=" + printKids() +
                 '}';
+    }
+
+    private String printParents() {
+        StringBuilder sb = new StringBuilder();
+        for (FamilyNode parent : parents) {
+            if (parent != null) {
+                sb.append("Parent: ")
+                        .append(parent.name)
+                        .append(", ")
+                        .append(parent.age)
+                        .append(";");
+            }
+        }
+        return sb.toString();
     }
 
     private String printKids() {
