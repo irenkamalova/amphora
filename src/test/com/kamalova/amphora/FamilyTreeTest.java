@@ -1,6 +1,5 @@
 package com.kamalova.amphora;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,10 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FamilyTreeTest {
 
-
     @Test
     @DisplayName("When add to tree then data is correct")
-    void add() {
+    void testCorrectInjection() {
         FamilyTree t = new FamilyTree();
         // A, B - no kids
         assertEquals("A", t.add("A", 1900, null, null).getName());
@@ -21,7 +19,6 @@ class FamilyTreeTest {
         assertEquals("B1", t.add("B1", 1900, null, null).getName());
         assertEquals("aA1", t.add("aA1", 1920, "A1", "B1").getName());
         assertEquals("bA1", t.add("bA1", 1922, "A1", "B1").getName());
-
 
         assertEquals("Anna", t.add("Anna", 1900, null, null).getName());
         assertEquals("Bob", t.add("Bob", 1900, null, null).getName());
@@ -37,7 +34,7 @@ class FamilyTreeTest {
     }
 
     @Test
-    void findByName() {
+    void testCorrectPossibilityFindNode() {
         FamilyTree t = new FamilyTree();
         t.add("Anna", 1900, null, null);
         t.add("Bob", 1900, null, null);

@@ -1,8 +1,11 @@
 package com.kamalova.amphora;
 
+import lombok.Getter;
+
 import java.util.*;
 
 public class FamilyTree {
+    @Getter
     private final List<FamilyNode> roots = new ArrayList<>();
 
     public FamilyTree() {
@@ -69,25 +72,6 @@ public class FamilyTree {
         throw new IllegalArgumentException("Parent " + name + " not founded");
     }
 
-    public void printTree() {
-        // BFS to print the tree
-        Set<FamilyNode> seen = new HashSet<>();
-        Queue<FamilyNode> queue = new LinkedList<>(roots);
-
-        while (!queue.isEmpty()) {
-            FamilyNode node = queue.poll();
-
-            List<FamilyNode> kids = node.getKids();
-            kids.forEach(kid -> {
-                if (!seen.contains(kid)) {
-                    queue.add(kid);
-                    seen.add(kid);
-                }
-            });
-            seen.add(node);
-            System.out.println(node);
-        }
-    }
 }
 
 

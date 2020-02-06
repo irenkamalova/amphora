@@ -17,9 +17,10 @@ public class Test {
         t.add("Linda", 1917, "Bob", null);
         t.add("Paul", 1910, "Loly", "Erich");
 
-        t.add("Samanta", 1940, "Elise", "Paul");
+        FamilyNode samanta = t.add("Samanta", 1940, "Elise", "Paul");
 
-        t.printTree();
+        FamilyTreeUtils.printTree(t);
+        FamilyTreeUtils.printUpwardsTreeFrom(samanta);
 
     }
 }
