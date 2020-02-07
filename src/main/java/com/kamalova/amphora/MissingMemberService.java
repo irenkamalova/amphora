@@ -1,7 +1,6 @@
 package com.kamalova.amphora;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MissingMemberService {
 
@@ -50,7 +49,7 @@ public class MissingMemberService {
                 return sortedNodes;
             }
 
-            List<LinkedFamilyNode> parents = end.getParents();
+            List<LinkedFamilyNode> parents = end.getLinkedParents();
             if (parents == null || start.getGeneration() == end.getGeneration()) {
                 end = end.getPrevious();
                 // and here we start to search throw the M nodes without parents
@@ -66,6 +65,9 @@ public class MissingMemberService {
                     }
                     if (parent.getAge() < node.getAge() && parent.getAge() >= start.getAge()) {
                         start = parent;
+                        if (start.getGeneration() != end.getGeneration()) {
+                            end = end.getPrevious();
+                        }
                     }
                 }
             }
@@ -95,8 +97,10 @@ public class MissingMemberService {
 
         while (iterator.hasNext()) {
             next = new LinkedFamilyNode(iterator.next());
-            next.setPrevious(current);
             current.setNext(next);
+            next.setPrevious(current);
+            current = next;
+            list.add(current);
         }
 
         return list;
