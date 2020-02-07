@@ -1,4 +1,4 @@
-package com.kamalova.amphora;
+package com.kamalova.amphora.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,9 +14,13 @@ public class LinkedFamilyNode extends FamilyNode {
     @Setter
     private LinkedFamilyNode next;
     @Getter
-    private List<LinkedFamilyNode> linkedParents = null;
+    private List<LinkedFamilyNode> linkedKids = new ArrayList<>();
 
     public LinkedFamilyNode(FamilyNode node) {
         super(node.getGeneration(), node.getName(), node.getAge());
+    }
+
+    public void addLinkedKid(LinkedFamilyNode kid) {
+        linkedKids.add(kid);
     }
 }

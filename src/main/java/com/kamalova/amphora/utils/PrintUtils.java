@@ -1,9 +1,12 @@
-package com.kamalova.amphora;
+package com.kamalova.amphora.utils;
 
+
+import com.kamalova.amphora.model.FamilyNode;
+import com.kamalova.amphora.service.FamilyTree;
 
 import java.util.*;
 
-public class FamilyTreeUtils {
+public class PrintUtils {
 
     // Q4: Print algorithm
     public static void printTree(FamilyTree familyTree) {

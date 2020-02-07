@@ -1,4 +1,7 @@
-package com.kamalova.amphora;
+package com.kamalova.amphora.utils;
+
+import com.kamalova.amphora.model.FamilyNode;
+import com.kamalova.amphora.service.FamilyTree;
 
 import java.util.*;
 import java.util.Comparator;

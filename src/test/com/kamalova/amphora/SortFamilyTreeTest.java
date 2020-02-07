@@ -2,11 +2,12 @@ package com.kamalova.amphora;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.kamalova.amphora.model.FamilyNode;
+import com.kamalova.amphora.service.FamilyTree;
+import com.kamalova.amphora.utils.SortFamilyTree;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

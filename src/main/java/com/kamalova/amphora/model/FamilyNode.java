@@ -1,4 +1,4 @@
-package com.kamalova.amphora;
+package com.kamalova.amphora.model;
 
 import lombok.Getter;
 
@@ -64,10 +64,9 @@ public class FamilyNode {
         return sb.toString();
     }
 
-    public boolean hasKids() {
-        return !kids.isEmpty();
-    }
-
+    /*
+    Lombok generated
+     */
     public boolean equals(final Object o) {
         if (o == this) return true;
         if (!(o instanceof FamilyNode)) return false;

@@ -1,5 +1,6 @@
-package com.kamalova.amphora;
+package com.kamalova.amphora.service;
 
+import com.kamalova.amphora.model.FamilyNode;
 import lombok.Getter;
 
 import java.util.*;

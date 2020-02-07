@@ -1,5 +1,7 @@
 package com.kamalova.amphora;
 
+import com.kamalova.amphora.service.FamilyTree;
+
 public class TestUtils {
 
     public static FamilyTree createFamilyTree() {

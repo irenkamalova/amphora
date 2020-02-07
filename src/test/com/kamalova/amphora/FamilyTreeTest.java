@@ -1,5 +1,6 @@
 package com.kamalova.amphora;
 
+import com.kamalova.amphora.service.FamilyTree;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -42,6 +43,4 @@ class FamilyTreeTest {
         assertEquals(1900, t.findByName("Bob").getAge());
         assertThrows(IllegalArgumentException.class, () -> t.findByName("Unknown"));
     }
-
-
 }
