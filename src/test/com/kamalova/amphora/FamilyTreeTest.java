@@ -35,12 +35,29 @@ class FamilyTreeTest {
     }
 
     @Test
+    @DisplayName("When add two the same names then fail with exception")
+    void testIncorrectNameInjection() {
+        FamilyTree t = new FamilyTree();
+        // A, B - no kids
+        assertEquals("A", t.save("A", 1900, null, null).getName());
+        assertThrows(IllegalArgumentException.class, () -> t.save("A", 1900, null, null));
+    }
+
+    @Test
+    @DisplayName("When add with no exist parent then fail with exception")
+    void testIncorrectParentInjection() {
+        FamilyTree t = new FamilyTree();
+        assertThrows(IllegalArgumentException.class, () -> t.save("A", 1900, "B", null));
+        assertThrows(IllegalArgumentException.class, () -> t.save("A", 1900, null, "C"));
+    }
+
+    @Test
     void testCorrectPossibilityFindNode() {
         FamilyTree t = new FamilyTree();
         t.save("Anna", 1900, null, null);
         t.save("Bob", 1900, null, null);
         assertEquals(1900, t.findByName("Anna").getAge());
         assertEquals(1900, t.findByName("Bob").getAge());
-        assertThrows(IllegalArgumentException.class, () -> t.findByName("Unknown"));
+        assertNull(t.findByName("Unknown"));
     }
 }

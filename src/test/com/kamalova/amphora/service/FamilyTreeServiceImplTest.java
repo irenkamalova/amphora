@@ -2,10 +2,12 @@ package com.kamalova.amphora.service;
 
 import com.kamalova.amphora.dao.FamilyTreeRepository;
 import com.kamalova.amphora.dao.model.FamilyNode;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
@@ -15,17 +17,16 @@ import static org.mockito.BDDMockito.given;
 
 
 @RunWith(SpringRunner.class)
-class FamilyTreeServiceImplTest {
+public class FamilyTreeServiceImplTest {
 
-    @MockBean
+    @MockBean(name = "repository")
     FamilyTreeRepository familyTreeRepository;
 
     @Autowired
     private FamilyTreeService familyTreeService;
 
     @Test
-    public void whenGetTreeThenSuccess()
-            throws Exception {
+    public void whenGetTreeThenSuccess() {
         FamilyNode mockNode = new FamilyNode(0, "name", 1900);
         FamilyNode mockNode2 = new FamilyNode(0, "name2", 1902);
         List<FamilyNode> mockedList = Arrays.asList(mockNode, mockNode2);
@@ -61,6 +62,14 @@ class FamilyTreeServiceImplTest {
         assertEquals(0, result.getGeneration());
         assertEquals(name, result.getName());
         assertEquals(age, result.getAge());
+    }
+
+    @TestConfiguration
+    static class FamilyTreeServiceTestConfiguration {
+        @Bean
+        public FamilyTreeService familyTreeService() {
+            return new FamilyTreeServiceImpl();
+        }
     }
 
 }
