@@ -1,8 +1,9 @@
 package com.kamalova.amphora.api.controller;
 
-import com.kamalova.amphora.api.controller.model.ApiError;
-import com.kamalova.amphora.api.controller.model.FamilyNodeRequest;
-import com.kamalova.amphora.model.FamilyNode;
+import com.kamalova.amphora.api.model.ApiError;
+import com.kamalova.amphora.api.model.FamilyNodeRequest;
+import com.kamalova.amphora.api.model.SortedFamilyResponse;
+import com.kamalova.amphora.dao.model.FamilyNode;
 import com.kamalova.amphora.service.FamilyTreeService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "realm", path = "/service/user")
-@Api(value = "Realm Management System")
+@RequestMapping(name = "amphora", path = "/")
+@Api(value = "Family Tree System")
 public class ControllerImpl implements Controller {
 
     @Autowired
@@ -32,6 +33,7 @@ public class ControllerImpl implements Controller {
                     familyNodeRequest.getMother());
             return ResponseEntity.status(200).body("Successfully added node");
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiError("Bad request"));
         }
     }
@@ -39,7 +41,8 @@ public class ControllerImpl implements Controller {
     public ResponseEntity<Object> get(boolean ascending) {
         try {
             List<FamilyNode> result = familyTreeService.getSorted(ascending);
-            return ResponseEntity.ok().header("OK").body(result);
+            return ResponseEntity.ok().header("OK")
+                    .body(new SortedFamilyResponse(result));
         } catch (Exception e) {
             return ResponseEntity.status(404)
                     .body(new ApiError("RealmNotFound"));

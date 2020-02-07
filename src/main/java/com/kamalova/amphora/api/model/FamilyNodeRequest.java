@@ -1,4 +1,4 @@
-package com.kamalova.amphora.api.controller.model;
+package com.kamalova.amphora.api.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -13,11 +13,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FamilyNodeRequest {
     @JacksonXmlProperty(isAttribute = true)
     @XmlAttribute
-    String name;
+    private String name;
     @JacksonXmlProperty
-    Integer age;
+    private Integer age;
     @JacksonXmlProperty
-    String mother;
+    private String mother;
     @JacksonXmlProperty
-    String father;
+    private String father;
 }

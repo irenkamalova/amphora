@@ -1,8 +1,8 @@
 package com.kamalova.amphora.utils;
 
-import com.kamalova.amphora.model.FamilyNode;
-import com.kamalova.amphora.service.FamilyTree;
-import com.kamalova.amphora.model.LinkedFamilyNode;
+import com.kamalova.amphora.dao.model.FamilyNode;
+import com.kamalova.amphora.dao.FamilyTree;
+import com.kamalova.amphora.dao.model.LinkedFamilyNode;
 
 import java.util.*;
 

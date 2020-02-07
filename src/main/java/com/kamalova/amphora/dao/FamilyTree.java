@@ -1,21 +1,26 @@
-package com.kamalova.amphora.service;
+package com.kamalova.amphora.dao;
 
-import com.kamalova.amphora.model.FamilyNode;
+import com.kamalova.amphora.dao.model.FamilyNode;
+import com.kamalova.amphora.utils.SortFamilyTree;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
-public class FamilyTree {
+@Component
+public class FamilyTree implements FamilyTreeRepository {
     @Getter
     private final List<FamilyNode> roots = new ArrayList<>();
 
     public FamilyTree() {
     }
 
-    public FamilyNode add(String name, int age,
-                          String father, String mother) {
+    @Override
+    public FamilyNode save(String name, int age,
+                           String father, String mother) {
         FamilyNode node;
-        if (father == null && mother == null) {
+        if (StringUtils.isEmpty(father) && StringUtils.isEmpty(mother)) {
             node = new FamilyNode(0, name, age);
             roots.add(node);
             return node;
@@ -32,7 +37,7 @@ public class FamilyTree {
             parents[0] = fn;
             parents[1] = mn;
             return node;
-        } else if (mother != null) {
+        } else if (!StringUtils.isEmpty(mother)) {
             return addToParent(name, age, mother);
         } else {
             return addToParent(name, age, father);
@@ -51,6 +56,7 @@ public class FamilyTree {
         return node;
     }
 
+    @Override
     public FamilyNode findByName(String name) {
         // BFS to search node - O(N) complexity
         Set<FamilyNode> seen = new HashSet<>();
@@ -73,25 +79,10 @@ public class FamilyTree {
         throw new IllegalArgumentException("Parent " + name + " not founded");
     }
 
+    @Override
+    public List<FamilyNode> getSortedNodes(boolean ascending) {
+        Comparator<Integer> comparator = Integer::compareTo;
+        return ascending ? SortFamilyTree.sort(this, comparator) :
+                SortFamilyTree.sort(this, comparator.reversed());
+    }
 }
-
-
-/*
-
-Q1: Implement a test class to inject and create the family structure one node at a time. The structure should at least
-have five levels ( great grant parents, grand parent, parent, and kids, grand-kids).
-- Make the tree unbalanced. Try to have a good distribution of the number of kids for a pair of parents (i.e. some
-with no kids, some with 2 kids, some with 3, or 4....).
-The injection time complexity should be O(n). i.e. one logical search to find the place to enter a family node.
-Q2: Implement an algorithm with possibly O(n) complexity to sort the whole family tree in age descending order.
-Q3: Implement a similar algorithm to sort the whole family tree in age ascending order.
-Q4: Pretty print algorithm to print the family tree.
-Q5: Print the reverse family tree ( upwards) from a node including both parents for each level(i.e. for a kid print its
-parents, parents’ parents, great grand-parents.
-Q6: Can you think of an algorithm that can insert a new family member ( assume we found a long missing member!) in
-to the correct place of a sorted (ascending) list based on age, where the algorithm’s time complexity is better than
-O(n)?. pseudo code or actual implementation is fine.
-Q7: Candidate can use Mockito like mocking tool to showcase how the data persistence layer ( assume these records
-can be persisted in a DB but for the test we don’t need a working database) can be mocked.
-
- */

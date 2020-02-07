@@ -1,7 +1,7 @@
 package com.kamalova.amphora.utils;
 
-import com.kamalova.amphora.model.FamilyNode;
-import com.kamalova.amphora.service.FamilyTree;
+import com.kamalova.amphora.dao.model.FamilyNode;
+import com.kamalova.amphora.dao.FamilyTree;
 
 import java.util.*;
 import java.util.Comparator;
@@ -14,7 +14,7 @@ public class SortFamilyTree {
     then collect it all to the collection
     Complexity of TreeMap is O(logN) for insertion and lookup,
     so iterating through all elements by O(N), the final complexity will be O(N)
-    Props: you can change the comparator
+    Props: you can change comparator
     Cons: extra space for the TreeMap
      */
 

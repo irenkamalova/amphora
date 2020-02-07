@@ -1,4 +1,4 @@
-package com.kamalova.amphora.api.controller.model;
+package com.kamalova.amphora.api.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.Data;

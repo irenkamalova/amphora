@@ -1,4 +1,4 @@
-package com.kamalova.amphora.model;
+package com.kamalova.amphora.dao.model;
 
 import lombok.Getter;
 

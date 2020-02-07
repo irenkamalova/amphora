@@ -1,6 +1,6 @@
 package com.kamalova.amphora.service;
 
-import com.kamalova.amphora.model.FamilyNode;
+import com.kamalova.amphora.dao.model.FamilyNode;
 
 import java.util.List;
 

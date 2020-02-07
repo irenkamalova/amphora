@@ -2,8 +2,8 @@ package com.kamalova.amphora;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.kamalova.amphora.model.FamilyNode;
-import com.kamalova.amphora.service.FamilyTree;
+import com.kamalova.amphora.dao.model.FamilyNode;
+import com.kamalova.amphora.dao.FamilyTree;
 import com.kamalova.amphora.utils.SortFamilyTree;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

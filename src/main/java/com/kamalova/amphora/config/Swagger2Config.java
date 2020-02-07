@@ -21,7 +21,7 @@ public class Swagger2Config {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
                 .apis(RequestHandlerSelectors
-                        .basePackage("com.kamalova.amphora.api.controller"))
+                        .basePackage("com.kamalova.amphora.api"))
                 //.paths(path())
                 .build()
                 .useDefaultResponseMessages(false)
