@@ -24,7 +24,7 @@ public class MissingMemberHandler {
      now, what there the next element, so we use the new structure
      LinkedFamilyNode
 
-     One more idea: to store list in AVL data structure - so, we can insert data by complexity of O(N)
+     One more idea: to store sorted list in AVL data structure - so, we can insert data by complexity of O(N)
 
      */
 
@@ -82,6 +82,7 @@ public class MissingMemberHandler {
                         end = kid;
                     }
                 }
+                // to guarantee movement:
                 if (nextStart == start) {
                     start = start.getNext();
                 } else {
@@ -111,7 +112,7 @@ public class MissingMemberHandler {
 
     public static LinkedFamilyNode sortToExtendedStructure(FamilyTree familyTree,
                                                            Comparator<Integer> comparator) {
-        List<FamilyNode> sorted = SortFamilyTree.sort(familyTree, comparator);
+        List<FamilyNode> sorted = SortFamilyTreeUtils.sort(familyTree, comparator);
 
         Iterator<FamilyNode> iterator = sorted.iterator();
         LinkedFamilyNode head = null;

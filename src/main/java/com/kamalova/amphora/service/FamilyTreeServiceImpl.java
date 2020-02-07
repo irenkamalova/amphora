@@ -14,12 +14,12 @@ public class FamilyTreeServiceImpl implements FamilyTreeService {
     FamilyTreeRepository familyTreeRepository;
 
     @Override
-    public void addNode(String name, int age, String father, String mother) {
-        familyTreeRepository.save(name, age, father, mother);
+    public FamilyNode addNode(String name, int age, String father, String mother) {
+        return familyTreeRepository.save(name, age, father, mother);
     }
 
     @Override
-    public List<FamilyNode> getSorted(boolean ascending) {
+    public List<FamilyNode> getSortedTree(boolean ascending) {
         return familyTreeRepository.getSortedNodes(ascending);
     }
 }

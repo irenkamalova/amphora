@@ -1,7 +1,7 @@
 package com.kamalova.amphora.dao;
 
 import com.kamalova.amphora.dao.model.FamilyNode;
-import com.kamalova.amphora.utils.SortFamilyTree;
+import com.kamalova.amphora.utils.SortFamilyTreeUtils;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -82,7 +82,7 @@ public class FamilyTree implements FamilyTreeRepository {
     @Override
     public List<FamilyNode> getSortedNodes(boolean ascending) {
         Comparator<Integer> comparator = Integer::compareTo;
-        return ascending ? SortFamilyTree.sort(this, comparator) :
-                SortFamilyTree.sort(this, comparator.reversed());
+        return ascending ? SortFamilyTreeUtils.sort(this, comparator) :
+                SortFamilyTreeUtils.sort(this, comparator.reversed());
     }
 }

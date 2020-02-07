@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.kamalova.amphora.dao.model.FamilyNode;
 import com.kamalova.amphora.dao.FamilyTree;
-import com.kamalova.amphora.utils.SortFamilyTree;
+import com.kamalova.amphora.utils.SortFamilyTreeUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ class SortFamilyTreeTest {
         FamilyTree t = TestUtils.createFamilyTree();
 
         // Q3 - sort tree in ascending order:
-        List<FamilyNode> sortedAscendingOrder = SortFamilyTree.sort(t, Integer::compareTo);
+        List<FamilyNode> sortedAscendingOrder = SortFamilyTreeUtils.sort(t, Integer::compareTo);
 
         assertEquals(1889, sortedAscendingOrder.get(0).getAge());
         assertEquals(1890, sortedAscendingOrder.get(1).getAge());
@@ -33,7 +33,7 @@ class SortFamilyTreeTest {
         assertEquals(1960, sortedAscendingOrder.get(9).getAge());
 
         // Q2 - sort tree in descending order:
-        List<FamilyNode> sortedDescendingOrder = SortFamilyTree.sort(t,
+        List<FamilyNode> sortedDescendingOrder = SortFamilyTreeUtils.sort(t,
                 (Integer x, Integer y) -> Integer.compare(x, y) * (-1));
 
         Collections.reverse(sortedAscendingOrder);

@@ -7,9 +7,9 @@ import java.util.*;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-public class SortFamilyTree {
+public class SortFamilyTreeUtils {
     /*
-    Possible approaches:
+    Possible approach:
     create the TreeMap and add every age as key
     then collect it all to the collection
     Complexity of TreeMap is O(logN) for insertion and lookup,

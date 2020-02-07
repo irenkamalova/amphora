@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface FamilyTreeService {
     // Enter individual family nodes
-    void addNode(String name, int age,
-                 String father, String mother);
+    FamilyNode addNode(String name, int age,
+                       String father, String mother);
 
     // To get sorted family list for ascending and descending
-    List<FamilyNode> getSorted(boolean ascending);
+    List<FamilyNode> getSortedTree(boolean ascending);
 
 }

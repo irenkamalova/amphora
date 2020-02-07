@@ -27,11 +27,11 @@ public class ControllerImpl implements Controller {
             return ResponseEntity.badRequest().body(new ApiError("InvalidNodeName"));
         }
         try {
-            familyTreeService.addNode(familyNodeRequest.getName(),
+            FamilyNode familyNode = familyTreeService.addNode(familyNodeRequest.getName(),
                     familyNodeRequest.getAge(),
                     familyNodeRequest.getFather(),
                     familyNodeRequest.getMother());
-            return ResponseEntity.status(200).body("Successfully added node");
+            return ResponseEntity.status(200).body(familyNode);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(new ApiError("Bad request"));
@@ -40,7 +40,7 @@ public class ControllerImpl implements Controller {
 
     public ResponseEntity<Object> get(boolean ascending) {
         try {
-            List<FamilyNode> result = familyTreeService.getSorted(ascending);
+            List<FamilyNode> result = familyTreeService.getSortedTree(ascending);
             return ResponseEntity.ok().header("OK")
                     .body(new SortedFamilyResponse(result));
         } catch (Exception e) {
