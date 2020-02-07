@@ -15,33 +15,98 @@ java -jar amphora-1.0-SNAPSHOT.jar
 
 ## Usage
 
-[http://localhost:8080/](http://localhost:8080) will redirect you to swagger-api.html page, where you can find methods GET and POST to work with app.
+[http://localhost:8080/swagger-ui.html](http://localhost:8080) will redirect you to swagger-api.html page, where you can find methods GET and POST to work with app.
 
 You can use both formats: json/xml
 
 ##### POST
-Example of input data:
+Example of request:
 ```
+curl -X POST "http://localhost:8080/amphora/addFamilyMember" -H "accept: application/json" -H "Content-Type: application/xml" -d "<?xml version=\"1.0\" encoding=\"UTF-8\"?><FamilyNodeRequest name=\"Anna\">\t<age>1901</age>\t<father></father>\t<mother></mother></FamilyNodeRequest>"
+data:
 <?xml version="1.0" encoding="UTF-8"?>
-<FamilyNodeRequest name=“Anna”>
+<FamilyNodeRequest name="Anna">
 	<age>1901</age>
 	<father></father>
 	<mother></mother>
 </FamilyNodeRequest>
-
-<?xml version="1.0" encoding="UTF-8"?>
-<FamilyNodeRequest name=“Bob”>
-	<age>1890</age>
-	<father></father>
-	<mother></mother>
-</FamilyNodeRequest>
+```
+Response:
+```
+<FamilyNode>
+  <name>Anna</name>
+  <age>1901</age>
+  <parents>
+    <parents/>
+    <parents/>
+  </parents>
+  <kids/>
+  <generation>0</generation>
+</FamilyNode>
+```
+Request:
+```
+curl -X POST "http://localhost:8080/amphora/addFamilyMember" -H "accept: application/json" -H "Content-Type: application/json" -d "{ \"age\": 1890, \"father\": \"\", \"mother\": \"\", \"name\": \"Bob\"}"
+data:
+{
+  "age": 1890,
+  "father": "",
+  "mother": "",
+  "name": "Bob"
+}
+```
+Response:
+```
+{
+  "name": "Bob",
+  "age": 1890,
+  "parents": [
+    null,
+    null
+  ],
+  "kids": [],
+  "generation": 0
+}
 ```
 
 ##### GET
 * Nore: I use here one more param - generation - just to simplify visibility of result
 (can not be used) (see notes section)
+
+Descending order:
 ```
-curl -X GET "http://localhost:8080/?ascending=true" -H "accept: application/json"
+curl -X GET "http://localhost:8080/amphora/getFamilyTree?ascending=false" -H "accept: application/xml"
+```
+Output:
+```
+<SortedFamilyResponse>
+  <familyNodes>
+    <familyNodes>
+      <name>Anna</name>
+      <age>1901</age>
+      <parents>
+        <parents/>
+        <parents/>
+      </parents>
+      <kids/>
+      <generation>0</generation>
+    </familyNodes>
+    <familyNodes>
+      <name>Bob</name>
+      <age>1890</age>
+      <parents>
+        <parents/>
+        <parents/>
+      </parents>
+      <kids/>
+      <generation>0</generation>
+    </familyNodes>
+  </familyNodes>
+</SortedFamilyResponse>
+```
+Ascending order:
+```
+curl -X GET "http://localhost:8080/amphora/getFamilyTree?ascending=true" -H "accept: application/json"
 ```
 Output:
 ```

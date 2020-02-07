@@ -19,6 +19,9 @@ public class FamilyTree implements FamilyTreeRepository {
     @Override
     public FamilyNode save(String name, int age,
                            String father, String mother) {
+        if (findByName(name) != null) {
+            throw new IllegalArgumentException("Node with name " + name + " already exist");
+        }
         FamilyNode node;
         if (StringUtils.isEmpty(father) && StringUtils.isEmpty(mother)) {
             node = new FamilyNode(0, name, age);
@@ -26,7 +29,9 @@ public class FamilyTree implements FamilyTreeRepository {
             return node;
         } else if (father != null && mother != null) {
             FamilyNode fn = findByName(father);
+            checkFoundedNode(fn, father);
             FamilyNode mn = findByName(mother);
+            checkFoundedNode(mn, mother);
             if (fn.getGeneration() != mn.getGeneration()) {
                 throw new IllegalArgumentException("Incorrect parents");
             }
@@ -44,11 +49,15 @@ public class FamilyTree implements FamilyTreeRepository {
         }
     }
 
-    private FamilyNode addToParent(String name, int age, String parent) {
-        if (parent == null) {
-            throw new IllegalArgumentException("Error with " + name);
+    private void checkFoundedNode(FamilyNode node, String name) {
+        if (node == null) {
+            throw new IllegalArgumentException("Parent " + name + " not founded");
         }
+    }
+
+    private FamilyNode addToParent(String name, int age, String parent) {
         FamilyNode parentNode = findByName(parent);
+        checkFoundedNode(parentNode, parent);
         FamilyNode node = new FamilyNode(parentNode.getGeneration() + 1, name, age);
         FamilyNode[] parents = node.getParents();
         parents[0] = parentNode;
@@ -76,7 +85,7 @@ public class FamilyTree implements FamilyTreeRepository {
             });
             seen.add(node);
         }
-        throw new IllegalArgumentException("Parent " + name + " not founded");
+        return null;
     }
 
     @Override

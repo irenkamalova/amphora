@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(name = "amphora", path = "/")
-@Api(value = "Family Tree System")
+@RestController("Family Tree API")
+@RequestMapping(name = "amphora", path = "/amphora")
 public class ControllerImpl implements Controller {
 
     @Autowired
@@ -34,7 +33,7 @@ public class ControllerImpl implements Controller {
             return ResponseEntity.status(200).body(familyNode);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body(new ApiError("Bad request"));
+            return ResponseEntity.badRequest().body(new ApiError(e.getMessage()));
         }
     }
 
@@ -44,8 +43,9 @@ public class ControllerImpl implements Controller {
             return ResponseEntity.ok().header("OK")
                     .body(new SortedFamilyResponse(result));
         } catch (Exception e) {
-            return ResponseEntity.status(404)
-                    .body(new ApiError("RealmNotFound"));
+            e.printStackTrace();
+            return ResponseEntity.badRequest()
+                    .body(new ApiError(e.getMessage()));
         }
     }
 }
