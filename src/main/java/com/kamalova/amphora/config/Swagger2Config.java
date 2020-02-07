@@ -1,11 +1,8 @@
 package com.kamalova.amphora.config;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
@@ -22,7 +19,6 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2).select()
                 .apis(RequestHandlerSelectors
                         .basePackage("com.kamalova.amphora.api"))
-                //.paths(path())
                 .build()
                 .useDefaultResponseMessages(false)
                 .enableUrlTemplating(false)
@@ -36,10 +32,4 @@ public class Swagger2Config {
                 .version("1.0.0")
                 .build();
     }
-
-//    private Predicate<String> path() {
-//        return Predicates.and(
-//                PathSelectors.regex("/service/user/.*"),
-//                Predicates.not(PathSelectors.regex("/service/user/")));
-//    }
 }

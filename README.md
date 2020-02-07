@@ -15,7 +15,7 @@ java -jar amphora-1.0-SNAPSHOT.jar
 
 ## Usage
 
-[http://localhost:8080/swagger-ui.html](http://localhost:8080) will redirect you to swagger-api.html page, where you can find methods GET and POST to work with app.
+[http://localhost:8080/swagger-ui.html](http://localhost:8080) here you can find methods GET and POST to work with app.
 
 You can use both formats: json/xml
 
@@ -70,7 +70,7 @@ Response:
 ```
 
 ##### GET
-* Nore: I use here one more param - generation - just to simplify visibility of result
+* Note: I use here one more param - generation - just to simplify visibility of result
 (can not be used) (see notes section)
 
 Descending order:
@@ -185,6 +185,8 @@ MissingMemberHandlerTest - carefully cover different test cases
 (can not be used)
 
 * Constructions to the family node:
+
+
 1. Names are unique (to simplify).
 If we don't want our names to be unique,
 we can just add id, that will be for example hash of {name + age}, and then everytime then we create a node - we provide id as the result
